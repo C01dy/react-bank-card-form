@@ -1,0 +1,50 @@
+// colors
+$primary: #e3f2fd 
+$p-light: #ffffff
+$p-dark: #b1bfca
+
+$secondary: #90caf9
+$s-light: #c3fdff
+$s-dark: #5d99c6
+
+$p-text: #37474f
+$s-text: #000000
+
+body
+    margin: 0
+    background-color: $primary
+    font-family: "Courier New", sans-serif
+    color: darkslategray
+
+
+input
+    font-family: 'Pangolin-Regular'
+    font-size: 20px
+    color: $p-text
+    outline: none
+    padding: .4em .5em
+    border: 1px solid $secondary
+    border-radius: 5px
+    &:focus
+        border: 2px solid $s-dark
+        
+
+label 
+    margin-bottom: 5px
+
+button
+    outline: none
+    cursor: pointer
+    margin: 25px 0 15px 0
+    border: none
+    padding: 1.1em 
+    border-radius: 8px
+    background-color: $s-dark
+    color: $s-text
+    box-shadow: 0px 0px 5px 2px $primary
+    font-family: 'Raleway-Bold'
+    font-size: 16px
+    letter-spacing: 1px
+    transition: .3s
+    &:hover
+        background-color: $secondary
