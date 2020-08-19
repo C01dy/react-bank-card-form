@@ -1,8 +1,28 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import {cardNumRegConfigs, cvvRegConfigs} from '../../register-configs';
+import {normalizeCardNumber, normalizeCvv} from '../../inputs-normalizes';
 import s from './form.module.sass';
 import Row from '../row';
 import BankCard from '../bank-card';
+
+
+const years = [
+  2020,
+  2021,
+  2022,
+  2023,
+  2024,
+  2025,
+  2026,
+  2027,
+  2028,
+  2029,
+  2030,
+  2031,
+];
+
+const months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
 const Form = () => {
   const { register, errors, handleSubmit } = useForm({
@@ -33,17 +53,13 @@ const Form = () => {
                 errors.cardNumber ? s.errorBorder : ''
               }`}
               name="cardNumber"
-              type="number"
-              ref={register({
-                maxLength: {
-                  value: 16,
-                  message: 'length must be 16',
-                },
-                minLength: {
-                  value: 16,
-                  message: 'length must be 16',
-                },
-              })}
+              type="tel"
+              inputMode="numeric"
+              autoComplete="cc-number"
+              ref={register(cardNumRegConfigs)}
+              onChange={(e) =>
+                (e.target.value = normalizeCardNumber(e.target.value))
+              }
             />
           </div>
         </Row>
@@ -55,7 +71,7 @@ const Form = () => {
                 Card Holders
               </label>
             </div>
-            <input />
+            <input name="cardHolders" ref={register} />
           </div>
         </Row>
 
@@ -66,36 +82,25 @@ const Form = () => {
                 Expiration Date
               </label>
             </div>
-            <select name="expiration-date">
+            <select name="expirationDateMonth" ref={register}>
               <option selected disabled>
                 Month
               </option>
-              {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((item, idx) => (
-                <option key={idx + item}>{item}</option>
+              {months.map((item, idx) => (
+                <option value={item} key={item + idx}>
+                  {item}
+                </option>
               ))}
             </select>
           </div>
 
           <div className={s.cardInput} style={{ width: '34%' }}>
             <div className={s.topFieldText}></div>
-            <select name="expiration-date">
+            <select name="expirationDateYear" ref={register}>
               <option selected disabled>
                 Year
               </option>
-              {[
-                2020,
-                2021,
-                2022,
-                2023,
-                2024,
-                2025,
-                2026,
-                2027,
-                2028,
-                2029,
-                2030,
-                2031,
-              ].map((item, idx) => (
+              {years.map((item, idx) => (
                 <option key={idx + item}>{item}</option>
               ))}
             </select>
@@ -116,16 +121,8 @@ const Form = () => {
               }`}
               name="cvvNumber"
               type="number"
-              ref={register({
-                maxLength: {
-                  value: 4,
-                  message: 'max length 4',
-                },
-                minLength: {
-                  value: 3,
-                  message: 'min length 3',
-                },
-              })}
+              ref={register(cvvRegConfigs)}
+              onChange={(e) => (e.target.value = normalizeCvv(e.target.value))}
             />
           </div>
         </Row>

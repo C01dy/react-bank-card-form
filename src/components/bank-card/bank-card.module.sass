@@ -1,6 +1,12 @@
 @import '../../styles/main'
 
 .wrap
+    display: flex
+    justify-content: center
+    align-items: center
+    font-family: 'Pangolin-Regular'
+    font-size: 24px
+    letter-spacing: 1px
     position: absolute
     max-width: 350px
     bottom: 78%
@@ -11,8 +17,11 @@
     border-radius: 12px
     background-color: #e61f59
     background-image: radial-gradient(ellipse farthest-corner at right bottom, $primary 0%, #E61F59 50%, $p-dark 100%)
-    box-shadow: 0px 5px 10px 0px #e61f5736
-    border: 1px solid lightgray
+    box-shadow: 0px 13px 13px -7px rgba(0,0,0,0.75)
+    color: $p-light
+
+.cardNumMask
+    transition: .4s
 
 
 
