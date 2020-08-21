@@ -35,6 +35,8 @@ const Form = () => {
   const [cardHolder, setCardHolder] = useState('');
   const [month, setMonth] = useState('');
   const [year, setYear] = useState('');
+  const [cvv, setCvv] = useState('');
+  const [backVisible, setBackVisible] = useState(false);
 
   const onSubmit = (data) => {
     console.log(data);
@@ -43,8 +45,6 @@ const Form = () => {
   const changeHandler = (e) => {
     e.target.value = normalizeCardNumber(e.target.value);
     e.target.value.length <= 19 && setCardNum(e.target.value);
-
-    if (cardNum.match(new RegExp(/^(4)/)) != null) console.log('visa');
   };
   return (
     <div className={s.wrap}>
@@ -54,6 +54,8 @@ const Form = () => {
           cardHolder={cardHolder}
           month={month}
           year={year}
+          cvv={cvv}
+          backVisible={backVisible}
         />
 
         <Row>
@@ -112,7 +114,7 @@ const Form = () => {
               name="expirationDateMonth"
               ref={register}
               onChange={(e) => setMonth(e.target.value)}>
-              <option defaultValue="Month" disabled>
+              <option selected disabled>
                 Month
               </option>
               {months.map((item, idx) => (
@@ -129,7 +131,7 @@ const Form = () => {
               name="expirationDateYear"
               ref={register}
               onChange={(e) => setYear(e.target.value)}>
-              <option defaultValue="Year" disabled>
+              <option selected disabled>
                 Year
               </option>
               {years.map((item, idx) => (
@@ -154,7 +156,12 @@ const Form = () => {
               name="cvvNumber"
               type="number"
               ref={register(cvvRegConfigs)}
-              onChange={(e) => (e.target.value = normalizeCvv(e.target.value))}
+              onChange={(e) => {
+                e.target.value = normalizeCvv(e.target.value);
+                setCvv(e.target.value)
+              }}
+              onBlur={() => setBackVisible(false)}
+              onFocus={() => setBackVisible(true)}
             />
           </div>
         </Row>

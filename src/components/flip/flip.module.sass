@@ -1,0 +1,54 @@
+@import '../../styles/main'
+    
+.flips
+    transform: rotateY(180deg)
+	
+
+.flipContainer, .front, .back 
+    width: 100%
+
+
+/* flip speed goes here */
+.flipper 
+    transition: 0.8s
+    transform-style: preserve-3d
+
+    // position: relative
+    
+
+
+/* hide back of pane during swap */
+.front, .back 
+    backface-visibility: hidden
+
+
+/* front pane, placed above back */
+.front 
+    z-index: 2
+    /* for firefox 31 */
+    transform: rotateY(0deg)
+
+
+/* back, initially hidden pane */
+.back 
+    transform: rotateY(180deg)
+
+
+.wrap
+    display: flex
+    justify-content: center
+    align-items: center
+    font-family: 'Raleway-Regular'
+    font-size: 24px
+    letter-spacing: 1px
+    position: absolute
+    max-width: 350px
+    bottom: 78%
+    left: 12%
+    right: 12%
+    height: 225px
+    border-radius: 12px
+    background-color: #e61f59
+    background-image: radial-gradient(ellipse farthest-corner at right bottom, $p-dark 0%, #E61F59 50%, $primary 100%)
+    box-shadow: 0px 13px 13px -7px rgba(0,0,0,0.75)
+    color: $p-light
