@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import {cardNumRegConfigs, cvvRegConfigs} from '../../register-configs';
-import {normalizeCardNumber, normalizeCvv} from '../../inputs-normalizes';
+import {
+  cardNumRegConfigs,
+  cvvRegConfigs,
+  holdersRegConfigs,
+} from '../../register-configs';
+import { normalizeCardNumber, normalizeCvv } from '../../inputs-normalizes';
 import s from './form.module.sass';
 import Row from '../row';
 import BankCard from '../bank-card';
-
 
 const years = [
   2020,
@@ -21,7 +24,6 @@ const years = [
   2030,
   2031,
 ];
-
 const months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
 const Form = () => {
@@ -29,14 +31,30 @@ const Form = () => {
     mode: 'onChange',
   });
 
+  const [cardNum, setCardNum] = useState('');
+  const [cardHolder, setCardHolder] = useState('');
+  const [month, setMonth] = useState('');
+  const [year, setYear] = useState('');
+
   const onSubmit = (data) => {
     console.log(data);
   };
 
+  const changeHandler = (e) => {
+    e.target.value = normalizeCardNumber(e.target.value);
+    e.target.value.length <= 19 && setCardNum(e.target.value);
+
+    if (cardNum.match(new RegExp(/^(4)/)) != null) console.log('visa');
+  };
   return (
     <div className={s.wrap}>
       <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
-        <BankCard />
+        <BankCard
+          cardNum={cardNum}
+          cardHolder={cardHolder}
+          month={month}
+          year={year}
+        />
 
         <Row>
           <div className={s.cardInput} style={{ width: '100%' }}>
@@ -49,7 +67,7 @@ const Form = () => {
               </span>
             </div>
             <input
-              className={`${s.cardNumInput} ${
+              className={`${s.cardInput} ${
                 errors.cardNumber ? s.errorBorder : ''
               }`}
               name="cardNumber"
@@ -57,9 +75,7 @@ const Form = () => {
               inputMode="numeric"
               autoComplete="cc-number"
               ref={register(cardNumRegConfigs)}
-              onChange={(e) =>
-                (e.target.value = normalizeCardNumber(e.target.value))
-              }
+              onChange={changeHandler}
             />
           </div>
         </Row>
@@ -70,8 +86,18 @@ const Form = () => {
               <label className={s.label} htmlFor="card-holder">
                 Card Holders
               </label>
+              <span className={s.error}>
+                {errors.cardHolders && errors.cardHolders.message}
+              </span>
             </div>
-            <input name="cardHolders" ref={register} />
+            <input
+              className={`${s.cardInput} ${
+                errors.cardHolders ? s.errorBorder : ''
+              }`}
+              name="cardHolders"
+              ref={register(holdersRegConfigs)}
+              onChange={(e) => setCardHolder(e.target.value)}
+            />
           </div>
         </Row>
 
@@ -82,13 +108,16 @@ const Form = () => {
                 Expiration Date
               </label>
             </div>
-            <select name="expirationDateMonth" ref={register}>
-              <option selected disabled>
+            <select
+              name="expirationDateMonth"
+              ref={register}
+              onChange={(e) => setMonth(e.target.value)}>
+              <option defaultValue="Month" disabled>
                 Month
               </option>
               {months.map((item, idx) => (
                 <option value={item} key={item + idx}>
-                  {item}
+                  {('' + item).length < 2 ? '0' + item : item}
                 </option>
               ))}
             </select>
@@ -96,8 +125,11 @@ const Form = () => {
 
           <div className={s.cardInput} style={{ width: '34%' }}>
             <div className={s.topFieldText}></div>
-            <select name="expirationDateYear" ref={register}>
-              <option selected disabled>
+            <select
+              name="expirationDateYear"
+              ref={register}
+              onChange={(e) => setYear(e.target.value)}>
+              <option defaultValue="Year" disabled>
                 Year
               </option>
               {years.map((item, idx) => (
@@ -116,7 +148,7 @@ const Form = () => {
               </span>
             </div>
             <input
-              className={`${s.cardNumInput} ${
+              className={`${s.cardInput} ${
                 errors.cvvNumber ? s.errorBorder : ''
               }`}
               name="cvvNumber"

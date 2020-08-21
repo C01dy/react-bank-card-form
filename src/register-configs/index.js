@@ -1,19 +1,26 @@
 const cvvRegConfigs = {
   minLength: {
     value: 3,
-    message: 'min length 3',
+    message: 'Min 3 digits',
   },
 };
 
 const cardNumRegConfigs = {
   required: {
     value: true,
-    message: 'fill this field',
+    message: 'Fill this field',
   },
   minLength: {
     value: 19,
-    message: 'input 16 digits',
+    message: 'Input 16 digits',
   },
 };
 
-export { cardNumRegConfigs, cvvRegConfigs };
+const holdersRegConfigs = {
+  required: {
+    value: true,
+    message: 'Fill this field'
+  }
+}
+
+export { cardNumRegConfigs, cvvRegConfigs, holdersRegConfigs };
