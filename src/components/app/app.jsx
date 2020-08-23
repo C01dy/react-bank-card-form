@@ -7,7 +7,6 @@ const App = () => {
   return (
     <div className={s.app}>
       <Form/>
-      {/* <Flip front={<h1>Front</h1>} back={<h1>Back</h1>}/> */}
     </div>
   );
 };

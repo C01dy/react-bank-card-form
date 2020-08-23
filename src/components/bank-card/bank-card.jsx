@@ -53,7 +53,6 @@ const BankCard = ({ cardNum, cardHolder, month, year, cvv, backVisible }) => {
   );
 
   const cardBack = (
-    <>
       <div className={s.wrap}>
         <div className={s.topLine}></div>
         <div className={s.innerCard}>
@@ -68,7 +67,6 @@ const BankCard = ({ cardNum, cardHolder, month, year, cvv, backVisible }) => {
           </div>
         </div>
       </div>
-    </>
   );
   return <Flip front={cardFront} back={cardBack} backVisible={backVisible} />;
 };

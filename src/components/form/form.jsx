@@ -27,9 +27,7 @@ const years = [
 const months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
 const Form = () => {
-  const { register, errors, handleSubmit } = useForm({
-    mode: 'onChange',
-  });
+  const { register, errors, handleSubmit } = useForm();
 
   const [cardNum, setCardNum] = useState('');
   const [cardHolder, setCardHolder] = useState('');
@@ -78,6 +76,7 @@ const Form = () => {
               autoComplete="cc-number"
               ref={register(cardNumRegConfigs)}
               onChange={changeHandler}
+              maxLength={19}
             />
           </div>
         </Row>
@@ -114,7 +113,7 @@ const Form = () => {
               name="expirationDateMonth"
               ref={register}
               onChange={(e) => setMonth(e.target.value)}>
-              <option selected disabled>
+              <option defaultValue disabled>
                 Month
               </option>
               {months.map((item, idx) => (
@@ -131,7 +130,7 @@ const Form = () => {
               name="expirationDateYear"
               ref={register}
               onChange={(e) => setYear(e.target.value)}>
-              <option selected disabled>
+              <option defaultValue disabled>
                 Year
               </option>
               {years.map((item, idx) => (
