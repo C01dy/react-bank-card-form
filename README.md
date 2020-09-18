@@ -6,6 +6,7 @@ Credit card filling form.
 * React
 * React Hook Form
 * Sass
+* Webpack
 ### How to start project?
 ***
 1. install packages ```npm install ```
